@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/estrutura-sistema-pedidos-java.iml" filepath="$PROJECT_DIR$/.idea/estrutura-sistema-pedidos-java.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/Projeto - sistema e pedidos.iml" filepath="$PROJECT_DIR$/Projeto - sistema e pedidos.iml" />
+>>>>>>> 7e1b566a61fc5c09f41fbf3f0341affbfdeba32b
     </modules>
   </component>
 </project>
