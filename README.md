@@ -7,15 +7,22 @@ SISTEMA DE GESTÃO DE PEDIDOS COM ESTOQUE
 DOMINIOS: 
 
 • Catálogo
+
 • Estoque
+
 • Pedido
+
 • Pagamento
+
 • Entrega
 
 EXPLORAÇÃO:
 
 • Saga pattern (conceitual)
+
 • Mensageria
+
 • Consistência eventual
+
 • Cache para catálogo  
 
