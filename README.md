@@ -4,7 +4,7 @@
 
 # SISTEMA DE GESTÃO DE PEDIDOS COM ESTOQUE
 
-## DOMÍNIOS
+DOMÍNIOS
 
 * Catálogo
 * Estoque
@@ -12,7 +12,7 @@
 * Pagamento
 * Entrega
 
-## EXPLORAÇÃO
+EXPLORAÇÃO
 
 * Saga Pattern (conceitual)
 * Mensageria
