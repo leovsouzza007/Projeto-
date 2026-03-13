@@ -1,28 +1,21 @@
-ENTRAR EM CONTATO (83 986556414)
+# ENTRAR EM CONTATO (83 986556414)
 
 - RENATO (nao consegui salvar o  seu numero)
 
-SISTEMA DE GESTÃO DE PEDIDOS COM ESTOQUE
+# SISTEMA DE GESTÃO DE PEDIDOS COM ESTOQUE
 
-DOMINIOS: 
+## DOMÍNIOS
 
-• Catálogo
+* Catálogo
+* Estoque
+* Pedido
+* Pagamento
+* Entrega
 
-• Estoque
+## EXPLORAÇÃO
 
-• Pedido
-
-• Pagamento
-
-• Entrega
-
-EXPLORAÇÃO:
-
-• Saga pattern (conceitual)
-
-• Mensageria
-
-• Consistência eventual
-
-• Cache para catálogo  
+* Saga Pattern (conceitual)
+* Mensageria
+* Consistência eventual
+* Cache para catálogo
 
