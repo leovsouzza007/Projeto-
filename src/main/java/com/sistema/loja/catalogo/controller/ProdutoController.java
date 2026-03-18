@@ -1,5 +1,7 @@
-package com.sistema.loja.catalogo;
+package com.sistema.loja.catalogo.controller;
 
+import com.sistema.loja.catalogo.model.Produto;
+import com.sistema.loja.catalogo.service.CatalogoService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 

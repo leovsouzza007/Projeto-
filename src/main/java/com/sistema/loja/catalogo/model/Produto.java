@@ -1,4 +1,4 @@
-package com.sistema.loja.catalogo;
+package com.sistema.loja.catalogo.model;
 
 import jakarta.persistence.*;
 
