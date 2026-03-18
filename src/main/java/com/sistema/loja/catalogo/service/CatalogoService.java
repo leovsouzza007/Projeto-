@@ -1,7 +1,5 @@
 package com.sistema.loja.catalogo.service;
 
-import com.sistema.loja.catalogo.model.Produto;
-import com.sistema.loja.catalogo.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
