@@ -1,0 +1,48 @@
+package com.sistema.loja.catalogo.service;
+
+import com.sistema.loja.catalogo.model.Produto;
+import com.sistema.loja.catalogo.repository.ProdutoRepository;
+
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+public class CatalogoService {
+
+    private final ProdutoRepository repository;
+    private Map<Long, Produto> cache = new HashMap<>();
+
+    public CatalogoService(ProdutoRepository repository) {
+        this.repository = repository;
+    }
+
+    public Produto salvar(Produto p) {
+        Produto saved = repository.save(p);
+        cache.put(saved.getId(), saved);
+        return saved;
+    }
+
+    public List<Produto> listar() {
+        return repository.findAll();
+    }
+
+    public void deletar(Long id) {
+        repository.deleteById(id);
+        cache.remove(id);
+    }
+
+    public Produto buscar(Long id) {
+        if (cache.containsKey(id)) {
+            System.out.println("CACHE");
+            return cache.get(id);
+        }
+
+        return repository.findById(id)
+                .map(produto -> {
+                    cache.put(id, produto);
+                    return produto;
+                })
+                .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
+    }
+}

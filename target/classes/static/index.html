@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Catálogo</title>
+<style>
+body{font-family:Arial;background:#0f172a;color:white;text-align:center}
+.container{width:400px;margin:50px auto;background:#1e293b;padding:20px;border-radius:10px}
+input{width:90%;padding:10px;margin:5px;border-radius:5px;border:none}
+button{padding:10px 20px;margin-top:10px;border:none;background:#38bdf8;color:black;border-radius:5px;cursor:pointer}
+.produto{background:#334155;margin:10px;padding:10px;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>📦 Catálogo</h2>
+<input id="nome" placeholder="Nome">
+<input id="preco" placeholder="Preço">
+<button onclick="criar()">Adicionar</button>
+<div id="lista"></div>
+</div>
+<script>
+async function carregar(){
+const res=await fetch('/produtos');
+const data=await res.json();
+const lista=document.getElementById('lista');
+lista.innerHTML='';
+data.forEach(p=>{
+lista.innerHTML+=`<div class="produto">
+<b>${p.nome}</b> - R$ ${p.preco}
+<br><button onclick="del(${p.id})">Excluir</button>
+</div>`;
+});
+}
+async function criar(){
+const nome=document.getElementById('nome').value;
+const preco=document.getElementById('preco').value;
+await fetch('/produtos',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({nome,preco})});
+carregar();
+}
+async function del(id){
+await fetch('/produtos/'+id,{method:'DELETE'});
+carregar();
+}
+carregar();
+</script>
+</body>
+</html>
