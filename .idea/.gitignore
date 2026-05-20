@@ -1,29 +1,48 @@
-# Default ignored files
-/shelf/
+# =========================
+# IntelliJ IDEA
+# =========================
+.idea/
+*.iml
 /workspace.xml
-# Ignored default folder with query files
-/queries/
-# Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
-# Editor-based HTTP Client requests
-/httpRequests/
+/shelf/
 
-
-# Maven
-target/
-
+# =========================
 # VS Code
+# =========================
 .vscode/
 
-# IntelliJ
-.idea/
+# =========================
+# Maven
+# =========================
+target/
 
+# =========================
 # Logs
+# =========================
 *.log
 
-# OS
+# =========================
+# macOS
+# =========================
 .DS_Store
 
-# Application secrets
+# =========================
+# PostgreSQL / Local Config
+# =========================
 application-local.properties
+
+# =========================
+# Database / IDE
+# =========================
+/dataSources/
+/dataSources.local.xml
+
+# =========================
+# HTTP Requests
+# =========================
+/httpRequests/
+
+# =========================
+# SQL Queries
+# =========================
+/queries/
