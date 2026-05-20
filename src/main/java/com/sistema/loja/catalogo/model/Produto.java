@@ -1,5 +1,7 @@
 package com.sistema.loja.catalogo.model;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,19 +12,19 @@ public class Produto {
     private Long id;
 
     private String nome;
-    private Double preco;
+    private BigDecimal preco;
 
     public Produto() {}
 
-    public Produto(String nome, Double preco) {
+    public Produto(String nome, BigDecimal  preco) {
         this.nome = nome;
         this.preco = preco;
     }
 
     public Long getId() { return id; }
     public String getNome() { return nome; }
-    public Double getPreco() { return preco; }
+    public BigDecimal getPreco() { return preco; }
 
     public void setNome(String nome) { this.nome = nome; }
-    public void setPreco(Double preco) { this.preco = preco; }
+    public void setPreco(BigDecimal preco) { this.preco = preco; }
 }

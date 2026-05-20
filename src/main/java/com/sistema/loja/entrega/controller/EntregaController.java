@@ -4,7 +4,10 @@ import com.sistema.loja.entrega.dto.EntregaRequestDTO;
 import com.sistema.loja.entrega.dto.EntregaResponseDTO;
 import com.sistema.loja.entrega.service.EntregaService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/api/v1/entregas")
@@ -17,17 +20,31 @@ public class EntregaController {
     }
 
     @PostMapping
-    public EntregaResponseDTO criar(@RequestBody EntregaRequestDTO dto) {
-        return service.criarEntrega(dto);
+    public ResponseEntity<EntregaResponseDTO> criar(
+            @RequestBody EntregaRequestDTO dto) {
+
+        EntregaResponseDTO entrega = service.criarEntrega(dto);
+
+        URI uri = URI.create("/api/v1/entregas/" + entrega.getId());
+
+        return ResponseEntity.created(uri).body(entrega);
     }
 
     @PutMapping("/{id}/enviar")
-    public EntregaResponseDTO enviar(@PathVariable Long id) {
-        return service.enviar(id);
+    public ResponseEntity<EntregaResponseDTO> enviar(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                service.enviar(id)
+        );
     }
 
     @PutMapping("/{id}/finalizar")
-    public EntregaResponseDTO finalizar(@PathVariable Long id) {
-        return service.finalizar(id);
+    public ResponseEntity<EntregaResponseDTO> finalizar(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                service.finalizar(id)
+        );
     }
 }

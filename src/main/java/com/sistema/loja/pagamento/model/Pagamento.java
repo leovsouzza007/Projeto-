@@ -1,6 +1,13 @@
 package com.sistema.loja.pagamento.model;
 
-import jakarta.persistence.*;
+import com.sistema.loja.pagamento.enums.StatusPagamento;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Pagamento {
@@ -11,11 +18,13 @@ public class Pagamento {
 
     private Long pedidoId;
 
-    private String status; // APROVADO ou RECUSADO
+    @Enumerated(EnumType.STRING)
+    private StatusPagamento status;
 
-    public Pagamento() {}
+    public Pagamento() {
+    }
 
-    public Pagamento(Long pedidoId, String status) {
+    public Pagamento(Long pedidoId, StatusPagamento status) {
         this.pedidoId = pedidoId;
         this.status = status;
     }
@@ -34,11 +43,11 @@ public class Pagamento {
         this.pedidoId = pedidoId;
     }
 
-    public String getStatus() {
+    public StatusPagamento getStatus() {
         return status;
     }
 
-    public void setStatus(String status) { // 🔥 ESSE É O IMPORTANTE
+    public void setStatus(StatusPagamento status) {
         this.status = status;
     }
 }

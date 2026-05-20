@@ -21,7 +21,7 @@ button{padding:10px 20px;margin-top:10px;border:none;background:#38bdf8;color:bl
 </div>
 <script>
 async function carregar(){
-const res=await fetch('/produtos');
+const res=await fetch('/api/v1/produtos');
 const data=await res.json();
 const lista=document.getElementById('lista');
 lista.innerHTML='';

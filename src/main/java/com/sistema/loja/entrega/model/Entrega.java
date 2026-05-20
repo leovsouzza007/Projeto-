@@ -1,5 +1,7 @@
 package com.sistema.loja.entrega.model;
 
+import com.sistema.loja.entrega.enums.StatusEntrega;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,10 +13,14 @@ public class Entrega {
     private Long id;
 
     private Long pedidoId;
+
     private String endereco;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private StatusEntrega status;
 
     private LocalDateTime dataEnvio;
+
     private LocalDateTime dataEntrega;
 
     public Long getId() {
@@ -37,11 +43,11 @@ public class Entrega {
         this.endereco = endereco;
     }
 
-    public String getStatus() {
+    public StatusEntrega getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEntrega status) {
         this.status = status;
     }
 

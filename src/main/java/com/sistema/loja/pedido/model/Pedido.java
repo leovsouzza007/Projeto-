@@ -1,5 +1,6 @@
 package com.sistema.loja.pedido.model;
 
+import com.sistema.loja.pedido.enums.StatusPedido;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -10,47 +11,25 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusPedido status;
 
     @ElementCollection
     private List<Long> produtosIds;
 
-    // Construtor vazio (obrigatório pro JPA)
     public Pedido() {}
 
-    // Construtor com parâmetros
-    public Pedido(String status, List<Long> produtosIds) {
+    public Pedido(StatusPedido status, List<Long> produtosIds) {
         this.status = status;
         this.produtosIds = produtosIds;
     }
 
-    // GET ID
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public StatusPedido getStatus() { return status; }
+    public void setStatus(StatusPedido status) { this.status = status; }
 
-    // GET STATUS
-    public String getStatus() {
-        return status;
-    }
-
-    // SET STATUS
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    // GET PRODUTOS
-    public List<Long> getProdutosIds() {
-        return produtosIds;
-    }
-
-    // SET PRODUTOS
-    public void setProdutosIds(List<Long> produtosIds) {
-        this.produtosIds = produtosIds;
-    }
+    public List<Long> getProdutosIds() { return produtosIds; }
+    public void setProdutosIds(List<Long> produtosIds) { this.produtosIds = produtosIds; }
 }

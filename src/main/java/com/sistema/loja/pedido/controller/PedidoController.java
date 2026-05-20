@@ -1,9 +1,14 @@
 package com.sistema.loja.pedido.controller;
 
+import com.sistema.loja.pedido.enums.StatusPedido;
 import com.sistema.loja.pedido.model.Pedido;
 import com.sistema.loja.pedido.service.PedidoService;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/pedidos")
@@ -15,35 +20,30 @@ public class PedidoController {
         this.service = service;
     }
 
-    //  Criar pedido
     @PostMapping
     public ResponseEntity<Pedido> criar(@RequestBody Pedido pedido) {
-        Pedido novoPedido = service.criarPedido(pedido);
-        return ResponseEntity.status(201).body(novoPedido);
+        Pedido novo = service.criarPedido(pedido);
+        URI uri = URI.create("/api/v1/pedidos/" + novo.getId());
+        return ResponseEntity.created(uri).body(novo);
     }
 
-    //  Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Pedido> buscar(@PathVariable Long id) {
-        Pedido pedido = service.buscarPorId(id);
-        return ResponseEntity.ok(pedido);
+        return ResponseEntity.ok(service.buscarPorId(id));
     }
 
-    //  Listar todos
     @GetMapping
-    public ResponseEntity<Iterable<Pedido>> listar() {
+    public ResponseEntity<List<Pedido>> listar() {
         return ResponseEntity.ok(service.listarTodos());
     }
 
-    //  Atualizar status (ex: CRIADO → PAGO → ENVIADO)
     @PutMapping("/{id}/status")
-    public ResponseEntity<Pedido> atualizarStatus(@PathVariable Long id,
-                                                  @RequestParam String status) {
-        Pedido pedido = service.atualizarStatus(id, status);
-        return ResponseEntity.ok(pedido);
+    public ResponseEntity<Pedido> atualizarStatus(
+            @PathVariable Long id,
+            @RequestParam StatusPedido status) {
+        return ResponseEntity.ok(service.atualizarStatus(id, status));
     }
 
-    // ✅ Deletar pedido
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         service.deletar(id);

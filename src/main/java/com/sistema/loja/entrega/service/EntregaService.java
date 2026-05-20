@@ -4,6 +4,10 @@ import com.sistema.loja.entrega.model.Entrega;
 import com.sistema.loja.entrega.repository.EntregaRepository;
 import com.sistema.loja.entrega.dto.EntregaRequestDTO;
 import com.sistema.loja.entrega.dto.EntregaResponseDTO;
+import com.sistema.loja.entrega.enums.StatusEntrega;
+
+// IMPORT ADICIONADO
+import com.sistema.loja.exception.RecursoNaoEncontradoException;
 
 import org.springframework.stereotype.Service;
 
@@ -19,10 +23,12 @@ public class EntregaService {
     }
 
     public EntregaResponseDTO criarEntrega(EntregaRequestDTO dto) {
+
         Entrega entrega = new Entrega();
+
         entrega.setPedidoId(dto.getPedidoId());
         entrega.setEndereco(dto.getEndereco());
-        entrega.setStatus("PENDENTE");
+        entrega.setStatus(StatusEntrega.PENDENTE);
 
         Entrega salva = repository.save(entrega);
 
@@ -35,10 +41,12 @@ public class EntregaService {
     }
 
     public EntregaResponseDTO enviar(Long id) {
-        Entrega entrega = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Entrega não encontrada"));
 
-        entrega.setStatus("EM_ROTA");
+        Entrega entrega = repository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException(
+                        "Entrega com ID " + id + " não encontrada"));
+
+        entrega.setStatus(StatusEntrega.EM_ROTA);
         entrega.setDataEnvio(LocalDateTime.now());
 
         Entrega atualizada = repository.save(entrega);
@@ -52,10 +60,12 @@ public class EntregaService {
     }
 
     public EntregaResponseDTO finalizar(Long id) {
-        Entrega entrega = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Entrega não encontrada"));
 
-        entrega.setStatus("ENTREGUE");
+        Entrega entrega = repository.findById(id)
+                .orElseThrow(() -> new RecursoNaoEncontradoException(
+                        "Entrega com ID " + id + " não encontrada"));
+
+        entrega.setStatus(StatusEntrega.ENTREGUE);
         entrega.setDataEntrega(LocalDateTime.now());
 
         Entrega atualizada = repository.save(entrega);

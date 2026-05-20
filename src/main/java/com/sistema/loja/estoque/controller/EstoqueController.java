@@ -2,10 +2,14 @@ package com.sistema.loja.estoque.controller;
 
 import com.sistema.loja.estoque.model.Estoque;
 import com.sistema.loja.estoque.service.EstoqueService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+
 @RestController
-@RequestMapping("/api/v1/estoques") 
+@RequestMapping("/api/v1/estoques")
 
 public class EstoqueController {
 
@@ -16,25 +20,39 @@ public class EstoqueController {
     }
 
     @PostMapping
-    public Estoque criar(@RequestParam Long produtoId,
-                         @RequestParam Integer quantidade) {
-        return service.criar(produtoId, quantidade);
+    public ResponseEntity<Estoque> criar(@RequestParam Long produtoId,
+                                         @RequestParam Integer quantidade) {
+
+        Estoque estoque = service.criar(produtoId, quantidade);
+
+        URI uri = URI.create("/api/v1/estoques/" + produtoId);
+
+        return ResponseEntity.created(uri).body(estoque);
     }
 
     @PutMapping("/entrada")
-    public Estoque entrada(@RequestParam Long produtoId,
-                           @RequestParam Integer quantidade) {
-        return service.adicionar(produtoId, quantidade);
+    public ResponseEntity<Estoque> entrada(@RequestParam Long produtoId,
+                                           @RequestParam Integer quantidade) {
+
+        return ResponseEntity.ok(
+                service.adicionar(produtoId, quantidade)
+        );
     }
 
     @PutMapping("/saida")
-    public Estoque saida(@RequestParam Long produtoId,
-                         @RequestParam Integer quantidade) {
-        return service.remover(produtoId, quantidade);
+    public ResponseEntity<Estoque> saida(@RequestParam Long produtoId,
+                                         @RequestParam Integer quantidade) {
+
+        return ResponseEntity.ok(
+                service.remover(produtoId, quantidade)
+        );
     }
 
     @GetMapping("/{produtoId}")
-    public Estoque buscar(@PathVariable Long produtoId) {
-        return service.buscar(produtoId);
+    public ResponseEntity<Estoque> buscar(@PathVariable Long produtoId) {
+
+        return ResponseEntity.ok(
+                service.buscar(produtoId)
+        );
     }
 }
