@@ -30,6 +30,9 @@ public class SecurityConfig {
                     "/v3/api-docs/**"
                 ).permitAll()
 
+                // ✅ Actuator - monitoramento
+                .requestMatchers("/actuator/**").permitAll()
+
                 // ✅ Todos os endpoints da API - liberados por enquanto
                 // Quando implementar JWT, trocar por .authenticated()
                 .requestMatchers("/api/**").permitAll()
