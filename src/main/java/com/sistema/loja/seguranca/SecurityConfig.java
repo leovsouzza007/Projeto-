@@ -19,31 +19,8 @@ public class SecurityConfig {
             .sessionManagement(session ->
                 session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-
-                // ✅ Swagger / OpenAPI - liberados sem autenticação
-                .requestMatchers(
-                    "/swagger-ui.html",
-                    "/swagger-ui/**",
-                    "/api-docs",
-                    "/api-docs/**",
-                    "/v3/api-docs",
-                    "/v3/api-docs/**"
-                ).permitAll()
-
-                // ✅ Todos os endpoints da API - liberados por enquanto
-                // Quando implementar JWT, trocar por .authenticated()
-                .requestMatchers("/api/**").permitAll()
-
-                // ✅ Frontend estático
-                .requestMatchers(
-                    "/",
-                    "/index.html",
-                    "/static/**",
-                    "/produtos"
-                ).permitAll()
-
-                // 🔒 Qualquer outra rota requer autenticação
-                .anyRequest().authenticated()
+                // Libera TUDO temporariamente para debug
+                .anyRequest().permitAll()
             );
 
         return http.build();
