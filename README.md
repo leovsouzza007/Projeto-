@@ -1,3 +1,6 @@
+[![CI](https://github.com/leovsouzza007/Projeto-/actions/workflows/ci.yml/badge.svg)](https://github.com/leovsouzza007/Projeto-/actions/workflows/ci.yml)
+
+
 🛒 Sistema Loja - Microsserviços com Spring Boot
 
 Projeto acadêmico desenvolvido utilizando arquitetura baseada em microsserviços com Spring Boot, PostgreSQL, Spring Security e Swagger/OpenAPI.
