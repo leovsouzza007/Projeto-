@@ -44,9 +44,11 @@ public class SecurityConfig {
                     "/static/**",
                     "/produtos"
                 ).permitAll()
+                
 
                 // 🔒 Qualquer outra rota requer autenticação
                 .anyRequest().authenticated()
+
             );
 
         return http.build();
