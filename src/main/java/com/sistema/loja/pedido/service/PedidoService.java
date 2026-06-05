@@ -2,6 +2,7 @@ package com.sistema.loja.pedido.service;
 
 import com.sistema.loja.config.RabbitMQConfig;
 import com.sistema.loja.exception.RecursoNaoEncontradoException;
+import com.sistema.loja.pedido.controller.PedidoNotificacaoController;
 import com.sistema.loja.pedido.enums.StatusPedido;
 import com.sistema.loja.pedido.event.PedidoCriadoEvent;
 import com.sistema.loja.pedido.model.Pedido;
@@ -24,11 +25,14 @@ public class PedidoService {
 
     private final PedidoRepository repository;
     private final RabbitTemplate rabbitTemplate;
+    private final PedidoNotificacaoController notificacaoController;
 
     public PedidoService(PedidoRepository repository,
-                         RabbitTemplate rabbitTemplate) {
+                         RabbitTemplate rabbitTemplate,
+                         PedidoNotificacaoController notificacaoController) {
         this.repository = repository;
         this.rabbitTemplate = rabbitTemplate;
+        this.notificacaoController = notificacaoController;
     }
 
     public Pedido criarPedido(Pedido pedido) {
@@ -36,7 +40,6 @@ public class PedidoService {
         Pedido salvo = repository.save(pedido);
 
         try {
-            // Tudo como String — sem tipos complexos que o Jackson não conhece
             PedidoCriadoEvent evento = new PedidoCriadoEvent(
                     salvo.getId(),
                     salvo.getStatus().name(),
@@ -75,7 +78,13 @@ public class PedidoService {
     public Pedido atualizarStatus(Long id, StatusPedido status) {
         Pedido pedido = buscarPorId(id);
         pedido.setStatus(status);
-        return repository.save(pedido);
+        Pedido salvo = repository.save(pedido);
+
+        // Notifica clientes WebSocket em tempo real
+        notificacaoController.notificarMudancaStatus(id, status.name());
+        log.info("📡 Notificação WebSocket enviada: pedido {} → status {}", id, status);
+
+        return salvo;
     }
 
     public void deletar(Long id) {
