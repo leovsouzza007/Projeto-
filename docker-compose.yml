@@ -45,6 +45,22 @@ services:
     networks:
       - loja-net
 
+  redis:
+    image: redis:7-alpine
+    container_name: loja-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --requirepass redis123
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis123", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - loja-net
+
   db:
     image: postgres:15-alpine
     environment:
@@ -108,6 +124,7 @@ services:
 volumes:
   loja-data:
   rabbitmq_data:
+  redis-data:
 
 networks:
   loja-net:
