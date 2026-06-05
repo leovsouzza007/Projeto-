@@ -1,6 +1,7 @@
 package com.sistema.loja.pedido.service;
 
 import com.sistema.loja.exception.RecursoNaoEncontradoException;
+import com.sistema.loja.pedido.controller.PedidoNotificacaoController;
 import com.sistema.loja.pedido.enums.StatusPedido;
 import com.sistema.loja.pedido.model.Pedido;
 import com.sistema.loja.pedido.repository.PedidoRepository;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,6 +27,12 @@ public class PedidoServiceTest {
     @Mock
     private PedidoRepository repository;
 
+    @Mock
+    private RabbitTemplate rabbitTemplate;
+
+    @Mock
+    private PedidoNotificacaoController notificacaoController;
+
     @InjectMocks
     private PedidoService service;
 
@@ -33,7 +41,6 @@ public class PedidoServiceTest {
         Pedido pedido = new Pedido();
         pedido.setProdutosIds(Arrays.asList(1L, 2L));
 
-        // thenAnswer devolve o objeto JÁ modificado pelo service
         when(repository.save(any(Pedido.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
@@ -92,7 +99,6 @@ public class PedidoServiceTest {
         when(repository.findById(1L))
                 .thenReturn(Optional.of(pedido));
 
-        // CORREÇÃO PRINCIPAL: thenAnswer para retornar o objeto já com status atualizado
         when(repository.save(any(Pedido.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
 
